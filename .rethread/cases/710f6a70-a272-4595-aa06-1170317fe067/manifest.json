@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "caseId": "710f6a70-a272-4595-aa06-1170317fe067",
+  "baseSha": "a4d9f37696a35131233937165069708c80135a42",
+  "behaviorContract": "Delivering the same event twice queues exactly one notification.",
+  "recipe": {
+    "network": "Registry-only install; checks in an unprivileged network namespace",
+    "complete": true,
+    "templateId": "l0bqj01o9pn39f7wapb9",
+    "requirements": "# Standard library only. pytest and Ruff are pinned in the evaluator template.\n",
+    "toolVersions": "Python 3.11.6\npytest 9.1.1\nruff 0.17.0\niniconfig==2.3.1\npackaging==26.3\npip==23.2.1\npluggy==1.7.0\nPygments==2.21.0\npytest==9.1.1\nruff==0.17.0\nsetuptools==65.5.0\n",
+    "networkIsolation": {
+      "probes": [
+        {
+          "address": "http://169.254.169.254/",
+          "exitCode": 7,
+          "responseBytes": 0
+        },
+        {
+          "address": "http://10.0.0.1/",
+          "exitCode": 7,
+          "responseBytes": 0
+        },
+        {
+          "address": "http://1.1.1.1/",
+          "exitCode": 7,
+          "responseBytes": 0
+        },
+        {
+          "address": "http://[2606:4700:4700::1111]/",
+          "exitCode": 7,
+          "responseBytes": 0
+        },
+        {
+          "address": "https://example.com/",
+          "exitCode": 6,
+          "responseBytes": 0
+        },
+        {
+          "address": "https://pypi.org/simple/",
+          "exitCode": 6,
+          "responseBytes": 0
+        }
+      ],
+      "verified": true,
+      "noNewPrivileges": true,
+      "namespaceSeparated": true
+    },
+    "requirementsHash": "66d25735e6fb5f34fceb5e71bb8ebf765b033f1cdaaaf3ad0382d18f91082c03",
+    "dependencyInstall": "python -m pip install --require-hashes --no-deps -r requirements.lock"
+  },
+  "checks": [
+    {
+      "id": "52ae3a0e-6687-47c0-91bc-811eb53ecc2a",
+      "name": "tests/test_delivery.py::test_retry_delivery",
+      "phase": "base",
+      "passed": false,
+      "reason": null,
+      "command": "python -m pytest -q tests/test_delivery.py::test_retry_delivery --junitxml=/evidence/report.xml",
+      "exitCode": 1,
+      "collected": 1,
+      "artifactId": "e45fbf69-13a4-4a0a-a180-b29e3b9c3166",
+      "durationMs": 385,
+      "outputHash": "4c0ac2fd3b0ab7920f71e0ebe4f90e7129580f840866d350d7e222d0f335950d"
+    },
+    {
+      "id": "72e030b8-1feb-43b6-85ac-f5b9fafb8b4d",
+      "name": "pytest",
+      "phase": "base",
+      "passed": false,
+      "reason": null,
+      "command": "python -m pytest -q  --junitxml=/evidence/report.xml",
+      "exitCode": 1,
+      "collected": 2,
+      "artifactId": "202432fb-a48c-4f46-802c-f5c6838e0de7",
+      "durationMs": 398,
+      "outputHash": "6dd6065f99a70cf01004e0d625d225d6b46db14e574030a2a2232cefd47e6747"
+    },
+    {
+      "id": "31d11d4b-d6e3-4182-bcb5-58d84d90c97e",
+      "name": "ruff",
+      "phase": "base",
+      "passed": true,
+      "reason": null,
+      "command": "python -m ruff check --output-format=json .",
+      "exitCode": 0,
+      "collected": null,
+      "artifactId": "1249f13c-6919-44b1-99ef-38abab6c2a3a",
+      "durationMs": 124,
+      "outputHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "035bfc9d-0a98-4a5f-829c-e8ce37607fe4",
+      "name": "tests/test_delivery.py::test_retry_delivery",
+      "phase": "candidate",
+      "passed": true,
+      "reason": null,
+      "command": "python -m pytest -q tests/test_delivery.py::test_retry_delivery --junitxml=/evidence/report.xml",
+      "exitCode": 0,
+      "collected": 1,
+      "artifactId": "21c509e0-df62-430a-b90b-7c4c36bb8459",
+      "durationMs": 332,
+      "outputHash": "f4c77b58e2280613a49ba18da1c4a02d440e862c49a6c8fe5daaf277333ff99d"
+    },
+    {
+      "id": "1642afae-6e74-4234-a330-0238364b7d56",
+      "name": "pytest",
+      "phase": "candidate",
+      "passed": true,
+      "reason": null,
+      "command": "python -m pytest -q  --junitxml=/evidence/report.xml",
+      "exitCode": 0,
+      "collected": 3,
+      "artifactId": "eae41ef4-2671-470b-b3fc-9a1a86f30348",
+      "durationMs": 362,
+      "outputHash": "86288ee89a493b657a4f02c2118272c4f6a9a7afa049f10741e60f3a564db934"
+    },
+    {
+      "id": "ca148494-9dac-47df-a71c-4748165f97b5",
+      "name": "ruff",
+      "phase": "candidate",
+      "passed": true,
+      "reason": null,
+      "command": "python -m ruff check --output-format=json .",
+      "exitCode": 0,
+      "collected": null,
+      "artifactId": "d1f961ee-2f78-4ebf-a1df-f3fc0a6074e3",
+      "durationMs": 112,
+      "outputHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "e4a2121d-da14-4b40-8464-09aace244557",
+      "name": "tests/guards/test_delivery_guard.py::test_retry_delivery",
+      "phase": "guard_base",
+      "passed": false,
+      "reason": null,
+      "command": "python -m pytest -q tests/guards/test_delivery_guard.py::test_retry_delivery --junitxml=/evidence/report.xml",
+      "exitCode": 1,
+      "collected": 1,
+      "artifactId": "d35eff9f-ec04-486b-84dd-9dcd860c8c0b",
+      "durationMs": 373,
+      "outputHash": "61cca8a5d24f75206eb3341010220e65fd5bba8b2f624d5716f018b75fcdc10a"
+    },
+    {
+      "id": "2b1e0122-a4bc-4f5e-87c9-c8ecadff6f22",
+      "name": "tests/guards/test_delivery_guard.py::test_retry_delivery",
+      "phase": "guard_candidate",
+      "passed": true,
+      "reason": null,
+      "command": "python -m pytest -q tests/guards/test_delivery_guard.py::test_retry_delivery --junitxml=/evidence/report.xml",
+      "exitCode": 0,
+      "collected": 1,
+      "artifactId": "b6e39355-27d4-4f1a-98cd-453681ec522e",
+      "durationMs": 242,
+      "outputHash": "a71df3ef716cabe43ead70bd8311cda3aeadcb986bea501da0ea9262f31c3925"
+    }
+  ],
+  "guard": {
+    "path": "tests/guards/test_delivery_guard.py",
+    "test": "tests/guards/test_delivery_guard.py::test_retry_delivery",
+    "paths": [
+      "delivery.py"
+    ],
+    "content": "from delivery import database, deliver, queued\n\n\ndef test_retry_delivery():\n    db = database()\n    deliver(db, \"evt_42\")\n    deliver(db, \"evt_42\")\n    assert queued(db) == 1\n",
+    "contract": "Delivering the same event twice queues exactly one notification."
+  },
+  "sourceDigest": "2a11ce1ea4a7b5c1479a2d84fb564aceac00f42d96655517ecc4d6f8076ebdd3"
+}

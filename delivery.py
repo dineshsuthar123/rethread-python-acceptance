@@ -1,4 +1,4 @@
-"""Deliberately failing, disposable fixture: enqueue is missing an atomic claim."""
+"""Delivery module with atomic claim to avoid duplicate queueing."""
 import sqlite3
 
 
@@ -10,8 +10,14 @@ def database():
 
 
 def deliver(db, event_id):
+    """Enqueue an event only once using an atomic claim."""
     with db:
-        db.execute("INSERT INTO outbox(event_id) VALUES (?)", (event_id,))
+        # Try to claim the event; if already claimed, skip enqueue.
+        claim_cur = db.execute(
+            "INSERT OR IGNORE INTO claims(event_id) VALUES (?)", (event_id,)
+        )
+        if claim_cur.rowcount == 1:
+            db.execute("INSERT INTO outbox(event_id) VALUES (?)", (event_id,))
 
 
 def queued(db):
